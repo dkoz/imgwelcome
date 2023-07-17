@@ -41,13 +41,13 @@ class ImgWelcome(M.Cog):
 	def __init__(C,bot):C.bot=bot;C.config=W.get_conf(C,2751203330,force_registration=A);C.datapath=B(X(raw_name='ImgWelcome'));C.imgpath=B(Y(C));D={'ANNOUNCE':H,'ACCOUNT_WARNINGS':A,A7:f"{C.imgpath}/transparent.png",A8:[255,255,255,230],'CHANNEL':E,A9:[128,128],Z:f"{C.imgpath}/fonts/UniSansHeavy.otf",a:30,b:22,c:18,d:12,AA:[0,0,0,255],e:f"{C.imgpath}/fonts/UniSansHeavy.otf",f:20,AB:[255,255,255,230],'SPECIAL_USERS':A,p:[255,255,255,230],AC:E,g:f"{C.imgpath}/fonts/UniSansHeavy.otf",h:50};C.config.register_guild(**D);C.session=T.ClientSession();C.version='0.3.2'
 	def cog_unload(A):A.bot.loop.create_task(A.session.close())
 	async def _create_welcome(O,member,test_member_number:I=E):
-		AR='of ';AQ='Welcome';q=test_member_number;K=member;C=await O.config.guild(K.guild).all();AD=C[g];AE=C[h];AF=C[e];AG=C[f];T=C[Z];AH=C[a];AI=C[b];AJ=C[c];AK=C[d];r=G.truetype(AD,AE);U=G.truetype(AF,AG);s=G.truetype(T,AH);t=G.truetype(T,AI);u=G.truetype(T,AJ);v=G.truetype(T,AK);w=F.open(C[A7]).convert(S);AL=F.open(O.imgpath+'/noimage.png');L=F.new(S,(500,150));L=n.fit(w,(500,150),centering=(0.5,0.5));L.paste(w);L=L.resize((500,150),F.NEAREST);V=F.new('L',(512,512),0);AM=R.Draw(V);AM.ellipse(((0,0),(512,512)),fill=255);i=J(C[A9]);V=V.resize(i,F.ANTIALIAS)
-		try:P=m();await K.avatar_url_as(format="png").save(P,seek_begin=A);P=F.open(P).convert(S)
+		AR='of ';AQ='Welcome';q=test_member_number;K=member;C=await O.config.guild(K.guild).all();AD=C[g];AE=C[h];AF=C[e];AG=C[f];T=C[Z];AH=C[a];AI=C[b];AJ=C[c];AK=C[d];r=G.truetype(AD,AE);U=G.truetype(AF,AG);s=G.truetype(T,AH);t=G.truetype(T,AI);u=G.truetype(T,AJ);v=G.truetype(T,AK);w=F.open(C[A7]).convert(S);AL=F.open(O.imgpath+'/noimage.png');L=F.new(S,(500,150));L=n.fit(w,(500,150),centering=(0.5,0.5));L.paste(w);L=L.resize((500,150),F.NEAREST);V=F.new('L',(512,512),0);AM=R.Draw(V);AM.ellipse(((0,0),(512,512)),fill=255);i=J(C[A9]);V=V.resize(i,F.LANCZOS)
+		try:P=m();await K.avatar.replace(format="png").save(P,seek_begin=A);P=F.open(P).convert(S)
 		except A4 as AS:o.error('ImgWelcome error in create_welcome:\n',exc_info=A);P=AL
 		j=n.fit(P,i,centering=(0,0));j.putalpha(V);k=J(C[A8]);W=J(C[p]);x=J(C[AB])
 		try:y=J(C[AC])
 		except A5:y=J(C[p])
-		M=J(C[AA]);z=F.new('L',(512,512),0);AN=R.Draw(z);AN.ellipse((0,0)+(512,512),fill=255,outline=0);X=F.new(S,(512,512));AO=R.Draw(X);AO.ellipse([0,0,512,512],fill=(k[0],k[1],k[2],180),outline=(255,255,255,250));Y=await O._circle_border(i);X=X.resize(Y,F.ANTIALIAS);AP=z.resize(Y,F.ANTIALIAS);A0=7+I((136-Y[0])/2);A1=11+I((136-Y[0])/2);H=R.Draw(L);L.paste(X,(A0,A0),AP);L.paste(j,(A1,A1),j);E=B(K)
+		M=J(C[AA]);z=F.new('L',(512,512),0);AN=R.Draw(z);AN.ellipse((0,0)+(512,512),fill=255,outline=0);X=F.new(S,(512,512));AO=R.Draw(X);AO.ellipse([0,0,512,512],fill=(k[0],k[1],k[2],180),outline=(255,255,255,250));Y=await O._circle_border(i);X=X.resize(Y,F.LANCZOS);AP=z.resize(Y,F.LANCZOS);A0=7+I((136-Y[0])/2);A1=11+I((136-Y[0])/2);H=R.Draw(L);L.paste(X,(A0,A0),AP);L.paste(j,(A1,A1),j);E=B(K)
 		def N(original_position:J,text:B,pixel_displacement:I,font,textoutline):D=textoutline;C=font;B=text;A=original_position;E=pixel_displacement;F=A[0]-E,A[1];G=A[0]+E,A[1];I=A[0],A[1]-E;J=A[0],A[1]+E;H.text(F,B,font=C,fill=D);H.text(G,B,font=C,fill=D);H.text(I,B,font=C,fill=D);H.text(J,B,font=C,fill=D);H.text(A,B,font=C,fill=D)
 		N((150,16),AQ,1,r,M);H.text((150,16),AQ,font=r,fill=y)
 		if D(E)<=17:N((152,63),E,1,s,M);H.text((152,63),E,font=s,fill=W)
@@ -96,7 +96,7 @@ class ImgWelcome(M.Cog):
 	@C.mod_or_permissions(administrator=A)
 	async def imgwelcome_channel(self,ctx,channel:L.TextChannel):
 		'Set the announcement channel.';B=channel;A=ctx
-		if not A.guild.me.permissions_in(B).send_messages:return await A.send('No permissions to speak in that channel.')
+		if not B.permissions_for(A.guild.me).send_messages:return await A.send('No permissions to speak in that channel.')
 		await self.config.guild(A.guild).CHANNEL.set(B.id);await B.send('This channel will be used for welcome messages.')
 	@imgwelcome.command(name=j)
 	@C.mod_or_permissions(administrator=A)
